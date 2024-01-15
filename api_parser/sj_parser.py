@@ -5,15 +5,15 @@ import requests as rq
 
 class SuperJobParser(APIparser):
     """
-    Класс для парсинга вакансий с платформы SuperJob
+    РљР»Р°СЃСЃ РґР»СЏ РїР°СЂСЃРёРЅРіР° РІР°РєР°РЅСЃРёР№ СЃ РїР»Р°С‚С„РѕСЂРјС‹ SuperJob
     """
     def __init__(self):
         self.sj_key = os.getenv('SJ_KEY')
 
     def get_vacancies(self, request):
         """
-        Метод для получения вакансий с платформы SuperJob.
-        Возвращает ответ в формате JSON
+        РњРµС‚РѕРґ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РІР°РєР°РЅСЃРёР№ СЃ РїР»Р°С‚С„РѕСЂРјС‹ SuperJob.
+        Р’РѕР·РІСЂР°С‰Р°РµС‚ РѕС‚РІРµС‚ РІ С„РѕСЂРјР°С‚Рµ JSON
         """
         params = dict(keyword=request)
         headers = {"X-Api-App-Id": self.sj_key}
