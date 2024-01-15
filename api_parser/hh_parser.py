@@ -5,13 +5,13 @@ import requests as rq
 
 class HeadHunterParser(APIparser):
     """
-    Класс для парсинга вакансий с платформы HeadHunter
+    РљР»Р°СЃСЃ РґР»СЏ РїР°СЂСЃРёРЅРіР° РІР°РєР°РЅСЃРёР№ СЃ РїР»Р°С‚С„РѕСЂРјС‹ HeadHunter
     """
 
     def get_vacancies(self, request):
         """
-        Метод для получения вакансий с платформы HeadHunter.
-        Возвращает ответ в формате JSON
+        РњРµС‚РѕРґ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РІР°РєР°РЅСЃРёР№ СЃ РїР»Р°С‚С„РѕСЂРјС‹ HeadHunter.
+        Р’РѕР·РІСЂР°С‰Р°РµС‚ РѕС‚РІРµС‚ РІ С„РѕСЂРјР°С‚Рµ JSON
         """
         params = dict(text=request)
         response = rq.get('https://api.hh.ru/vacancies', params=params)
