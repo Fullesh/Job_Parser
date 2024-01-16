@@ -7,7 +7,7 @@ from api_parser.hh_parser import HeadHunterParser
 import os
 
 # Создаём список команд для случаев когда уже есть файл JSON и когда его нет
-commands = ['Отсортировать вакансии по зарплате', 'Вывести топ вакансий', 'Выход']
+commands = ['Вывести отсортированные по зарплате вакансии', 'Вывести топ вакансий', 'Выход']
 commands_json = ['Найти вакансию по id', 'Вывести вакансии по зарплате', 'Удалить вакансию', 'Выход']
 json_work = 'n'
 
@@ -34,7 +34,7 @@ def choose_commands(comands, json_or_scratch):
         if json_or_scratch in ['y', 'yes', 'lf']:
             execute_json_commands(command)
         else:
-            execute_regular_commands(command)
+            execute_regular_commands(command, vacancies_list)
     except ValueError:
         print('Ошибка. Была введена строка!')
 
@@ -48,14 +48,15 @@ def execute_json_commands(command):
     pass
 
 
-def execute_regular_commands(command):
+def execute_regular_commands(command, vac_list):
     """
     Метод для выполнения команд когда не существует готовый файл JSON
     :param command: Номер команды для исполнения
+    :param vac_list: Лист вакансий
     :return None:
     """
     if command == 1:
-        sort_by_salary()
+        print(sort_by_salary(vac_list))
     elif command == 2:
         try:
             top_n = int(input('Введите количество выводимых в топе вакансий: '))
