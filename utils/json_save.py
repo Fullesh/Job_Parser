@@ -19,7 +19,11 @@ class JSONSaver:
         :param vac_list: Лист вакансий
         :return None:
         """
-        pass
+        for vac_info in vac_list:
+            self.data.append({'id': vac_info[0], 'vacancy_name': vac_info[1], 'vacancy_salary': vac_info[2],
+                              'vacancy_url': vac_info[3]})
+        with open(self.directory, 'w', encoding='UTF-8') as out_file:
+            json.dump(self.data, out_file, indent=4, ensure_ascii=False)
 
     def delete_by_id(self, vacancy_id):
         """
