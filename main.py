@@ -1,5 +1,5 @@
-from utils.json_save import *
-from utils.sort_by_salary import *
+from utils.json_save import JSONSaver
+from utils.sort_by_salary import sort_by_salary
 from utils.top_n_vacancies import print_top_vacancies
 from utils.make_vac_list import make_vacancies_list
 from api_parser.sj_parser import SuperJobParser
@@ -8,12 +8,13 @@ import os
 
 # Создаём список команд для случаев когда уже есть файл JSON и когда его нет
 commands = ['Вывести отсортированные по зарплате вакансии', 'Вывести топ вакансий', 'Выход']
-commands_json = ['Найти вакансию по id', 'Вывести вакансии по зарплате', 'Удалить вакансию', 'Выход']
+commands_json = ['Вывести вакансии по зарплате', 'Удалить вакансию по ID', 'Выход']
 json_work = 'n'
 
-# Создание экземпляров класса парсеров
+# Создание экземпляров класса
 hh_instance = HeadHunterParser()
 sj_instance = SuperJobParser()
+json_instance = JSONSaver()
 
 # Проверяем существует ли файл с вакансиями в директории
 if os.path.exists('vacancies.json'):
@@ -29,14 +30,14 @@ def choose_commands(comands, json_or_scratch):
     """
     for i in range(len(comands)):
         print(f'{i + 1}. {comands[i]}')
-    try:
-        command = int(input('\nКоманда для исполнения: '))
-        if json_or_scratch in ['y', 'yes', 'lf']:
-            execute_json_commands(command)
-        else:
-            execute_regular_commands(command, vacancies_list)
-    except ValueError:
-        print('Ошибка. Была введена строка!')
+    command = int(input('\nКоманда для исполнения: '))
+    if json_or_scratch in ['y', 'yes', 'lf']:
+        execute_json_commands(command)
+    else:
+        execute_regular_commands(command, vacancies_list)
+    # try:
+    # except ValueError:
+    #     print('Ошибка. Была введена строка!')
 
 
 def execute_json_commands(command):
@@ -45,7 +46,15 @@ def execute_json_commands(command):
     :param command: Команда для исполнения
     :return None:
     """
-    pass
+    if command == 1:
+        salary = int(input('Введите зарплату которую вы хотите найти: '))
+        json_instance.find_by_salary(salary)
+    elif command == 2:
+        vacancy_id = int(input('Введите ID вакансии для удаления: '))
+        json_instance.delete_by_id(vacancy_id)
+    elif command == 3:
+        print('Команда принята, выходим...')
+        return exit('Выход из приложения')
 
 
 def execute_regular_commands(command, vac_list):
@@ -60,7 +69,7 @@ def execute_regular_commands(command, vac_list):
     elif command == 2:
         try:
             top_n = int(input('Введите количество выводимых в топе вакансий: '))
-            print_top_vacancies(top_n)
+            print_top_vacancies(vac_list, top_n)
         except ValueError:
             print('Ошибка. Была введена строка!')
     elif command == 3:
@@ -69,15 +78,19 @@ def execute_regular_commands(command, vac_list):
 
 
 # Проверяем работаем ли с готовым файлом JSON. Если нет, то работаем с нуля
-if json_work.lower() in ['y', 'yes', 'lf']:
+if json_work.lower() in ['y', 'yes', 'lf', 'н']:
     choose_commands(commands_json, json_work)
 else:
     search_query = input('Введите вакансию для поиска: ')  # Запрашиваем вакансию для поиска
+    print('Подгружаем вакансии...')
     hh_vacancies = hh_instance.get_vacancies(search_query)  # Парсим вакансии по запросу
     sj_vacancies = sj_instance.get_vacancies(search_query)  # Парсим вакансии по запросу
     vacancies_list = make_vacancies_list(hh_vacancies, sj_vacancies)
-    show_list = input('Вакансии загружены. Вывести лист вакансий? ')  # Спрашиваем нужно ли вывести лист вакансий
-    if show_list in ['y', 'yes', 'lf']:  # Если да то выводим вакансии
+    in_json = input('Вакансии подгружены. Добавим вакансии в JSON? ')
+    if in_json in ['y', 'yes', 'lf', 'н']:
+        json_instance.add_vacancy(vacancies_list)
+    show_list = input('Вывести лист вакансий? ')  # Спрашиваем нужно ли вывести лист вакансий
+    if show_list in ['y', 'yes', 'lf', 'н']:  # Если да то выводим вакансии
         for vac in vacancies_list:
             print(*vac)
     else:
