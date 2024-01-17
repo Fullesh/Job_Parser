@@ -31,7 +31,15 @@ class JSONSaver:
         :param vacancy_id: ID вакансии
         :return None:
         """
-        pass
+        with open(self.directory, 'r', encoding='UTF-8') as open_file:
+            data = json.load(open_file)
+        for vac in data:
+            if str(vacancy_id) == str(vac['id']):
+                print('Got It!')
+                del data[vacancy_id-1]
+        with open(self.directory, 'w', encoding='UTF-8') as out_file:
+            json.dump(data, out_file, indent=4, ensure_ascii=False)
+        print(f'Вакансия с ID {vacancy_id} успешно удалена! Файл перезаписан.')
 
     def find_by_salary(self, salary):
         """
