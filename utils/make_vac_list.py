@@ -18,3 +18,4 @@ def make_vacancies_list(hh_vacancies, superjob_vacancies):
             vacancies_list.append([vacancy_id, vacancy['profession'], vacancy['payment_from'], vacancy['link']])
         else:
             vacancies_list.append([vacancy_id, vacancy['profession'], vacancy['payment_to'], vacancy['link']])
+        return vacancies_list
