@@ -47,4 +47,13 @@ class JSONSaver:
         :param salary: Необходимая зарплата
         :return None:
         """
-        pass
+        with open(self.directory, 'r', encoding='UTF-8') as open_file:
+            data = json.load(open_file)
+        for vac in data:
+            if str(salary) == str(vac['vacancy_salary']):
+                print(f'_______________________\n'
+                      f'ID вакансии: {vac["id"]}\n'
+                      f'Название вакансии: {vac["vacancy_name"]}\n'
+                      f'Зарплата (от): {vac["vacancy_salary"]}\n'
+                      f'Ссылка на вакансию: {vac["vacancy_url"]}\n'
+                      f'_______________________')
