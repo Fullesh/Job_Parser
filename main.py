@@ -31,13 +31,13 @@ def choose_commands(comands, json_or_scratch):
     for i in range(len(comands)):
         print(f'{i + 1}. {comands[i]}')
     command = int(input('\nКоманда для исполнения: '))
-    if json_or_scratch in ['y', 'yes', 'lf']:
-        execute_json_commands(command)
-    else:
-        execute_regular_commands(command, vacancies_list)
-    # try:
-    # except ValueError:
-    #     print('Ошибка. Была введена строка!')
+    try:
+        if json_or_scratch in ['y', 'yes', 'lf']:
+            execute_json_commands(command)
+        else:
+            execute_regular_commands(command, vacancies_list)
+    except ValueError:
+        print('Ошибка. Была введена строка!')
 
 
 def execute_json_commands(command):
