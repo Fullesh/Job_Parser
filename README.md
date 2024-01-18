@@ -15,7 +15,7 @@
 
 1. Клонируйте репозиторий:
    ```bash
-   git clone https://github.com/OrdinSI/Job-Explorer.git
+   https://github.com/Fullesh/Job_Parser.git
    ```
 2. Установите зависимости:
    ```bash
