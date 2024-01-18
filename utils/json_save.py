@@ -13,6 +13,10 @@ class JSONSaver:
         self.directory = 'vacancies.json'
         self.data = []
 
+    def __repr__(self):
+        return f'Класс для работы с JSON файлом. Директория с JSON файлом: {self.directory}\n' \
+               f'Данные содержащиеся в JSON в данный момент: {self.data}'
+
     def add_vacancy(self, vac_list):
         """
         Функция добавляет лист с вакансиями в JSON файл
