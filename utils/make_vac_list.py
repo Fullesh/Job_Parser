@@ -1,4 +1,10 @@
 def make_vacancies_list(hh_vacancies, superjob_vacancies):
+    """
+    Функция создаёт лист вакансий по двум платформам
+    :param hh_vacancies: Ответы на запрос вакансий с HeadHunter
+    :param superjob_vacancies: Ответы на запрос вакансий с SuperJob
+    :return vacancies_list: Собранный лист с вакансиями с обоих платформ
+    """
     vacancies_list = []
     vacancy_id = 0
     for vacancy in hh_vacancies['items']:
